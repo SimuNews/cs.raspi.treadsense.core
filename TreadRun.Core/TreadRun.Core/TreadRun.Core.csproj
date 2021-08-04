@@ -43,8 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\LogCenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Device\DeviceSettings.cs" />
+    <Compile Include="Device\User.cs" />
+    <Compile Include="Helpers\Helper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
