@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Globalization;
 using TreadRun.Core.Extensions;
 using TreadRun.Core.Device;
 using TreadRun.Core.Helpers;
 using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TreadRun.Core.Calibration;
+using System.Threading;
+using System.Threading.Tasks;
+using TreadRun.Core.Threads;
 
 namespace TreadRun.Core
 {
     class Program
     {
-
         public static string DIRECTORY = "../treadrun";
         public static string FILENAME = "device.json";
 
@@ -59,8 +55,10 @@ namespace TreadRun.Core
             InitializeUser(device);
             LogCenter.Instance.LogInfo("User initialized | Start device thread");
 
-            Console.ReadKey();
+            Task.Run(DeviceThread.StartAsync).Wait();
         }
+
+        #region static methods
 
         private static void InitializeUser(DeviceSettings device)
         {
@@ -107,6 +105,8 @@ namespace TreadRun.Core
             }
 
         }
+
+        #endregion
     }
 
     #region json classes
