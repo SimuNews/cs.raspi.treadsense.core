@@ -38,7 +38,7 @@ namespace TreadRun.Core.Helpers
 
         private void Log(LogLevel logLevel, string message)
         {
-            Console.WriteLine(string.Format("[{0} at {1}]: {2}", logLevel, DateTime.Now, message));
+            Console.WriteLine(string.Format("[{0} at {1}]: {2}", logLevel, DateTime.Now.TimeOfDay, message));
         }
 
         #endregion

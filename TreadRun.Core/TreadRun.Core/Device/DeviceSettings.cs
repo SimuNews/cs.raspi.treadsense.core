@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TreadRun.Core.Calibration;
 
 namespace TreadRun.Core.Device
 {
     public enum DeviceType
     {
         Default,
-        Pro,
         Plus,
         Beta,
         Develop
@@ -17,17 +17,44 @@ namespace TreadRun.Core.Device
 
     class DeviceSettings
     {
+        #region readonly fields
 
-        private readonly string DeviceName;
-        private readonly DeviceType DeviceType;
-        private readonly bool IsInitialized;
+        public readonly string DeviceName;
+        public readonly DeviceType DeviceType;
 
-        public DeviceSettings(string deviceName, DeviceType deviceType, bool isInitialized)
+        #endregion
+
+        #region properties
+
+        public bool IsInitialized { get; private set; }
+        public bool IsCalibrated { get; private set; }
+        public List<ICalibration> Calibrations { get; private set; }
+
+        #endregion
+
+        public DeviceSettings(string deviceName, DeviceType deviceType, bool isCalibrated)
         {
             DeviceName = deviceName;
             DeviceType = deviceType;
-            IsInitialized = isInitialized;
+            IsCalibrated = isCalibrated;
+
+            Calibrations = new List<ICalibration>();
         }
+
+        #region public methods
+
+        public void RegisterCalibration(ICalibration item)
+        {
+            Calibrations.Add(item);
+        }
+
+        public void SetInitialized(bool isInitialized) => IsInitialized = isInitialized;
+
+        #endregion
+
+        #region private methods
+
+        #endregion
 
         #region overrides
 
