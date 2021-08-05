@@ -8,11 +8,18 @@ namespace TreadRun.Core.Device
 {
     class User
     {
+        public static User Instance { get; private set; }
+
         public DeviceSettings DeviceSettings { get; }
 
         public User(DeviceSettings device)
         {
             DeviceSettings = device;
+        }
+
+        public static void Initialize(DeviceSettings device)
+        {
+            Instance = Instance ?? new User(device);
         }
     }
 }
