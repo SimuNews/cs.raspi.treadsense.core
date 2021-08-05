@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using Unosquare.RaspberryIO;
-//using Unosquare.WiringPi;
+using TreadRun.Core.Helpers;
+using Unosquare.RaspberryIO;
+using Unosquare.RaspberryIO.Abstractions;
+using Unosquare.WiringPi;
 
 namespace TreadRun.Core.Threads
 {
@@ -12,14 +14,17 @@ namespace TreadRun.Core.Threads
     {
         public static async Task StartAsync()
         {
-            //Init RaspberryIO
-            //Pi.Init<BootstrapWiringPi>();
+
+            LogCenter.Instance.LogInfo("Started thread...");
+
+            foreach (var item in await Pi.Bluetooth.ListDevices())
+            {
+                Console.WriteLine(item);
+            }
 
             while (true)
             {
-                
-
-                await Task.Delay(1);
+                await Task.Delay(1000);
             }
         }
     }

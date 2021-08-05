@@ -3,11 +3,12 @@ using TreadRun.Core.Extensions;
 using TreadRun.Core.Device;
 using TreadRun.Core.Helpers;
 using System.IO;
-using Newtonsoft.Json;
 using TreadRun.Core.Calibration;
-using System.Threading;
 using System.Threading.Tasks;
 using TreadRun.Core.Threads;
+using Newtonsoft.Json;
+using Unosquare.RaspberryIO;
+using Unosquare.WiringPi;
 
 namespace TreadRun.Core
 {
@@ -40,7 +41,7 @@ namespace TreadRun.Core
                 //read from file
                 DeviceJson deviceObj = JsonConvert.DeserializeObject<DeviceJson>(File.ReadAllText($"{DIRECTORY}/{FILENAME}"));
 
-                device = new DeviceSettings(deviceObj.DeviceName, Helper.StringToEnum<DeviceType>(deviceObj.DeviceType), deviceObj.Calibration.IsCalibrated);
+                device = new DeviceSettings(string.Format("TreadRun.{0}", Pi.Info.RaspberryPiVersion), Helper.StringToEnum<DeviceType>(deviceObj.DeviceType), deviceObj.Calibration.IsCalibrated);
                 LogCenter.Instance.LogInfo(string.Format(I18n.Translation.DeviceCreated, device.DeviceName));
 
             }
@@ -86,6 +87,9 @@ namespace TreadRun.Core
         {
             LogCenter.Initialize();
 
+            //Init RaspberryIO
+            Pi.Init<BootstrapWiringPi>();
+
             try
             {
                 //Create folders and files the first time...
@@ -96,7 +100,7 @@ namespace TreadRun.Core
 
                 if (!File.Exists($"{DIRECTORY}/{FILENAME}"))
                 {
-                    File.WriteAllText($"{DIRECTORY}/{FILENAME}", "{\"deviceName\":\"TreadRun.ZeroW\",\"deviceType\":\"Default\",\"calibration\":{\"isCalibrated\":false,\"averageDistance\":0,\"defaultIncline\":0}}");
+                    File.WriteAllText($"{DIRECTORY}/{FILENAME}", "{\"deviceType\":\"Default\",\"calibration\":{\"isCalibrated\":false,\"averageDistance\":0,\"defaultIncline\":0}}");
                 }
             }
             catch (Exception ex)
@@ -125,9 +129,6 @@ namespace TreadRun.Core
 
     public class DeviceJson
     {
-        [JsonProperty("deviceName")]
-        public string DeviceName { get; set; }
-
         [JsonProperty("deviceType")]
         public string DeviceType { get; set; }
 
