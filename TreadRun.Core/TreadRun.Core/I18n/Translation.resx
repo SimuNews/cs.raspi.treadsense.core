@@ -126,6 +126,9 @@
   <data name="DeviceType" xml:space="preserve">
     <value>Devicetype</value>
   </data>
+  <data name="IsBusyCalibrating" xml:space="preserve">
+    <value>Device gets calibrated...</value>
+  </data>
   <data name="IsInitialized" xml:space="preserve">
     <value>Initialized</value>
   </data>

@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TreadRun.Core.Calibration;
+using TreadRun.Core.Helpers;
 //using Unosquare.RaspberryIO;
+//using Unosquare.RaspberryIO.Abstractions;
 //using Unosquare.WiringPi;
 
 namespace TreadRun.Core.Threads
@@ -12,14 +15,14 @@ namespace TreadRun.Core.Threads
     {
         public static async Task StartAsync()
         {
-            //Init RaspberryIO
-            //Pi.Init<BootstrapWiringPi>();
+            LogCenter.Instance.LogInfo("Started thread...");
+
+            VelocityCalibration vc = new VelocityCalibration();
+            vc.Calibrate();
 
             while (true)
             {
-                
-
-                await Task.Delay(1);
+                await Task.Delay(1000);
             }
         }
     }
