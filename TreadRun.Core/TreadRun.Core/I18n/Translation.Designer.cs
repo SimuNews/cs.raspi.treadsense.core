@@ -88,6 +88,15 @@ namespace TreadRun.Core.I18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Device gets calibrated....
+        /// </summary>
+        internal static string IsBusyCalibrating {
+            get {
+                return ResourceManager.GetString("IsBusyCalibrating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initialized.
         /// </summary>
         internal static string IsInitialized {

@@ -10,5 +10,8 @@ namespace TreadRun.Core.Calibration
     {
         bool IsCalibrated { get; }
         bool Calibrate();
+
+        void Load();
+        void Save();
     }
 }

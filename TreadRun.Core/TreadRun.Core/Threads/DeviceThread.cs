@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TreadRun.Core.Calibration;
 using TreadRun.Core.Helpers;
-using Unosquare.RaspberryIO;
-using Unosquare.RaspberryIO.Abstractions;
-using Unosquare.WiringPi;
+//using Unosquare.RaspberryIO;
+//using Unosquare.RaspberryIO.Abstractions;
+//using Unosquare.WiringPi;
 
 namespace TreadRun.Core.Threads
 {
@@ -14,13 +15,10 @@ namespace TreadRun.Core.Threads
     {
         public static async Task StartAsync()
         {
-
             LogCenter.Instance.LogInfo("Started thread...");
 
-            foreach (var item in await Pi.Bluetooth.ListDevices())
-            {
-                Console.WriteLine(item);
-            }
+            VelocityCalibration vc = new VelocityCalibration();
+            vc.Calibrate();
 
             while (true)
             {

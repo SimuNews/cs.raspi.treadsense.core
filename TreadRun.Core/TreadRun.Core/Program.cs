@@ -1,5 +1,4 @@
 ﻿using System;
-using TreadRun.Core.Extensions;
 using TreadRun.Core.Device;
 using TreadRun.Core.Helpers;
 using System.IO;
@@ -7,8 +6,9 @@ using TreadRun.Core.Calibration;
 using System.Threading.Tasks;
 using TreadRun.Core.Threads;
 using Newtonsoft.Json;
-using Unosquare.RaspberryIO;
-using Unosquare.WiringPi;
+using TreadRun.Core.Services;
+//using Unosquare.RaspberryIO;
+//using Unosquare.WiringPi;
 
 namespace TreadRun.Core
 {
@@ -40,8 +40,11 @@ namespace TreadRun.Core
             {
                 //read from file
                 DeviceJson deviceObj = JsonConvert.DeserializeObject<DeviceJson>(File.ReadAllText($"{DIRECTORY}/{FILENAME}"));
-
+#if DEBUG
+                device = new DeviceSettings(string.Format("TreadRun.{0}", "ZeroW"), Helper.StringToEnum<DeviceType>(deviceObj.DeviceType), deviceObj.Calibration.IsCalibrated);
+#else
                 device = new DeviceSettings(string.Format("TreadRun.{0}", Pi.Info.RaspberryPiVersion), Helper.StringToEnum<DeviceType>(deviceObj.DeviceType), deviceObj.Calibration.IsCalibrated);
+#endif
                 LogCenter.Instance.LogInfo(string.Format(I18n.Translation.DeviceCreated, device.DeviceName));
 
             }
@@ -59,7 +62,7 @@ namespace TreadRun.Core
             Task.Run(DeviceThread.StartAsync).Wait();
         }
 
-        #region static methods
+#region static methods
 
         private static void InitializeUser(DeviceSettings device)
         {
@@ -86,9 +89,12 @@ namespace TreadRun.Core
         private static void InitializeProgram()
         {
             LogCenter.Initialize();
+            CalibrationService.Instance.Initialize();
 
+#if !DEBUG
             //Init RaspberryIO
             Pi.Init<BootstrapWiringPi>();
+#endif
 
             try
             {
@@ -110,10 +116,10 @@ namespace TreadRun.Core
 
         }
 
-        #endregion
+#endregion
     }
 
-    #region json classes
+#region json classes
 
     public class CalibrationJson
     {
@@ -136,6 +142,6 @@ namespace TreadRun.Core
         public CalibrationJson Calibration { get; set; }
     }
 
-    #endregion
+#endregion
 
 }
