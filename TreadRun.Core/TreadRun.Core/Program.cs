@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using TreadRun.Core.Threads;
 using Newtonsoft.Json;
 using TreadRun.Core.Services;
-//using Unosquare.RaspberryIO;
-//using Unosquare.WiringPi;
+using Unosquare.RaspberryIO;
+using Unosquare.WiringPi;
 
 namespace TreadRun.Core
 {
@@ -30,7 +30,6 @@ namespace TreadRun.Core
              *  - Develop
              *  - Beta
              */
-
 
             InitializeProgram();
 
@@ -62,7 +61,7 @@ namespace TreadRun.Core
             Task.Run(DeviceThread.StartAsync).Wait();
         }
 
-#region static methods
+        #region static methods
 
         private static void InitializeUser(DeviceSettings device)
         {

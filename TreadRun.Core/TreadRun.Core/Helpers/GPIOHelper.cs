@@ -10,6 +10,8 @@ namespace TreadRun.Core.Helpers
 {
     class GPIOHelper
     {
+#if !DEBUG
+
         private static Dictionary<int, IGpioPin> gpios = new Dictionary<int, IGpioPin>();
 
         public static void SetAsOutput(int pin)
@@ -91,5 +93,7 @@ namespace TreadRun.Core.Helpers
             SetAsOutput(gpioPin);
             gpios[(int)gpioPin].Write(high);
         }
+
+#endif
     }
 }

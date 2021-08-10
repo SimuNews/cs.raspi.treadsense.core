@@ -15,7 +15,11 @@ namespace TreadRun.Core.Calibration
         //Speed used to calibrate the device (kph)
         private const int KPH = 5;
         //How long should the calibration wait for the first stripe (sec)
+#if DEBUG
         private const int TIMEOUT = 5;
+#else
+        private const int TIMEOUT = 30;
+#endif
         //How long should the calibration run (sec)
         private const int CALIBRATIONTIME = 15;
 
@@ -37,7 +41,7 @@ namespace TreadRun.Core.Calibration
         /// <returns>True, if the calibration was a success</returns>
         public bool Calibrate()
         {
-            LogCenter.Instance.LogInfo("Start calibrating");
+            LogCenter.Instance.LogInfo("Start calibrating velocity");
 
             //vars
             int hits = 0;
@@ -48,7 +52,11 @@ namespace TreadRun.Core.Calibration
             Stopwatch timeBetweenStripes = new Stopwatch();
 
             runTime.Start();
+#if DEBUG
+            while (false)
+#else
             while (!GPIOHelper.ReadDigital(PR_GPIO))
+#endif
             {
                 if (runTime.Elapsed.TotalSeconds >= TIMEOUT)
                 {
@@ -63,7 +71,11 @@ namespace TreadRun.Core.Calibration
             while (runTime.Elapsed.TotalSeconds <= CALIBRATIONTIME)
             {
                 //If another stripe got read
+#if DEBUG
+                if (timeBetweenStripes.ElapsedMilliseconds >= 150)
+#else
                 if (GPIOHelper.ReadDigital(PR_GPIO))
+#endif
                 {
                     distances.Add((timeBetweenStripes.Elapsed.TotalSeconds.ToFixed(3) * (KPH / 3.6)).ToFixed(3));
                     timeBetweenStripes.Restart();
@@ -90,10 +102,12 @@ namespace TreadRun.Core.Calibration
             Distance = s;
             IsCalibrated = true;
 
+            Save();
+
             return true;
         }
 
-        #region load / save
+#region load / save
 
         public void Load()
         {
@@ -106,7 +120,7 @@ namespace TreadRun.Core.Calibration
             }
             catch (Exception ex)
             {
-                LogCenter.Instance.LogError(ex);
+                LogCenter.Instance.LogError("Device wasn't calibrated before. Calibrate...");
             }
         }
 
@@ -127,11 +141,11 @@ namespace TreadRun.Core.Calibration
             }
         }
 
-        #endregion
+#endregion
 
     }
 
-    #region JSON classes
+#region JSON classes
 
     public class VelocityCalibrationJSON
     {
@@ -142,6 +156,6 @@ namespace TreadRun.Core.Calibration
         public List<double> Distance { get; set; }
     }
 
-    #endregion
+#endregion
 
 }

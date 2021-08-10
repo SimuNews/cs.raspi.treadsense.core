@@ -49,10 +49,21 @@ namespace TreadRun.Core.Services
 			CreateNewServiceInstances();
 		}
 
-		public void CreateNewServiceInstances()
+		private void CreateNewServiceInstances()
 		{
-			VelocityCalibration = new VelocityCalibration();
-		}
+            #region initialize
+
+            VelocityCalibration = new VelocityCalibration();
+
+			#endregion
+
+			#region check for saved files
+
+			VelocityCalibration.Load();
+
+            #endregion
+
+        }
 
         #endregion
     }

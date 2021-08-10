@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TreadRun.Core.Calibration;
 using TreadRun.Core.Helpers;
+using TreadRun.Core.Services;
 //using Unosquare.RaspberryIO;
 //using Unosquare.RaspberryIO.Abstractions;
 //using Unosquare.WiringPi;
@@ -17,8 +18,11 @@ namespace TreadRun.Core.Threads
         {
             LogCenter.Instance.LogInfo("Started thread...");
 
-            VelocityCalibration vc = new VelocityCalibration();
-            vc.Calibrate();
+            if(!CalibrationService.Instance.VelocityCalibration.IsCalibrated)
+            {
+                if(CalibrationService.Instance.VelocityCalibration.Calibrate())
+                    LogCenter.Instance.LogInfo("Calibration successful!");
+            }
 
             while (true)
             {

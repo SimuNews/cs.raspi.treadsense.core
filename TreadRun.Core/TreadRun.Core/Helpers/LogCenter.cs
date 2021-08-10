@@ -36,7 +36,7 @@ namespace TreadRun.Core.Helpers
 
         #region private methods
 
-        private void Log(LogLevel logLevel, string message)
+        private void Log(LogLevel logLevel, object message)
         {
             Console.WriteLine(string.Format("[{0} at {1}]: {2}", logLevel, DateTime.Now.TimeOfDay, message));
         }
@@ -45,17 +45,17 @@ namespace TreadRun.Core.Helpers
 
         #region public methods
 
-        public void LogInfo(string message)
+        public void LogInfo(object message)
         {
             Log(LogLevel.Info, message);
         }
 
-        public void LogWarning(string message)
+        public void LogWarning(object message)
         {
             Log(LogLevel.Warning, message);
         }
 
-        public void LogError(string message)
+        public void LogError(object message)
         {
             Log(LogLevel.Error, message);
         }
@@ -65,15 +65,15 @@ namespace TreadRun.Core.Helpers
             Log(LogLevel.Error, exception.StackTrace);
         }
 
-        public void LogFatal(string message)
+        public void LogFatal(object message)
         {
             Log(LogLevel.Fatal, message);
         }
-        public void LogFatalWarning(string message)
+        public void LogFatalWarning(object message)
         {
             Log(LogLevel.FatalWarning, message);
         }
-        public void LogFatalError(string message)
+        public void LogFatalError(object message)
         {
             Log(LogLevel.FatalError, message);
         }
