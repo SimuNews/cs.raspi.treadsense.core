@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,42 +48,24 @@ namespace TreadRun.Core.Calibration
             Stopwatch timeBetweenStripes = new Stopwatch();
 
             runTime.Start();
-            while (true/* !Read white stripe */)
+            while (!GPIOHelper.ReadDigital(PR_GPIO))
             {
-                if(runTime.Elapsed.TotalSeconds >= TIMEOUT)
+                if (runTime.Elapsed.TotalSeconds >= TIMEOUT)
                 {
                     LogCenter.Instance.LogError("408 | Calibration ran into a timeout");
-                    //Send server a TIMEOUT message (408 Request Timeout)
                     return false;
                 }
             }
 
-
-            List<int> ms = new List<int>()
-            {
-                100, 120, 110, 106, 280, 10, 22,12,
-            };
-            int j = 1;
-            int x = 100;
-
-
-
-
             //Read the stripes and calculate the distance between them
             runTime.Restart();
             timeBetweenStripes.Restart();
-            while(runTime.Elapsed.TotalSeconds <= CALIBRATIONTIME)
+            while (runTime.Elapsed.TotalSeconds <= CALIBRATIONTIME)
             {
                 //If another stripe got read
-                if (timeBetweenStripes.ElapsedMilliseconds >= x)
+                if (GPIOHelper.ReadDigital(PR_GPIO))
                 {
                     distances.Add((timeBetweenStripes.Elapsed.TotalSeconds.ToFixed(3) * (KPH / 3.6)).ToFixed(3));
-
-                    if (j >= ms.Count)
-                        j = 0;
-
-                    x = ms[j++];
-
                     timeBetweenStripes.Restart();
                     hits++;
                 }
@@ -92,9 +76,9 @@ namespace TreadRun.Core.Calibration
             int k = 0;
             for (int i = 0; i < distances.Count; i++)
             {
-                if(s.Count > 0 && s[k] == distances[i])
+                if (s.Count > 0 && s[k] == distances[i])
                 {
-                    if(k++ == 3)
+                    if (k++ == 3)
                     {
                         break;
                     }
@@ -109,15 +93,55 @@ namespace TreadRun.Core.Calibration
             return true;
         }
 
+        #region load / save
+
         public void Load()
         {
-
+            try
+            {
+                string serialized = File.ReadAllText($"{Program.DIRECTORY}/velcalibration.json");
+                VelocityCalibrationJSON obj = JsonConvert.DeserializeObject<VelocityCalibrationJSON>(serialized);
+                IsCalibrated = obj.IsCalibrated;
+                Distance = obj.Distance;
+            }
+            catch (Exception ex)
+            {
+                LogCenter.Instance.LogError(ex);
+            }
         }
 
         public void Save()
         {
+            VelocityCalibrationJSON obj = new VelocityCalibrationJSON();
+            obj.Distance = Distance;
+            obj.IsCalibrated = IsCalibrated;
 
+            try
+            {
+                string serialized = JsonConvert.SerializeObject(obj);
+                File.WriteAllText($"{Program.DIRECTORY}/velcalibration.json", serialized);
+            }
+            catch (Exception ex)
+            {
+                LogCenter.Instance.LogError(ex);
+            }
         }
 
+        #endregion
+
     }
+
+    #region JSON classes
+
+    public class VelocityCalibrationJSON
+    {
+        [JsonProperty("isCalibrated")]
+        public bool IsCalibrated { get; set; }
+
+        [JsonProperty("distance")]
+        public List<double> Distance { get; set; }
+    }
+
+    #endregion
+
 }
