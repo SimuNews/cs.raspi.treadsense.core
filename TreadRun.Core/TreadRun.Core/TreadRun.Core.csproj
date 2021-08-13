@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Swan, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Unosquare.Swan.2.0.1\lib\net461\Swan.dll</HintPath>
@@ -67,8 +67,8 @@
     <Reference Include="Unosquare.Raspberry.Abstractions, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Unosquare.Raspberry.Abstractions.0.4.0\lib\netstandard2.0\Unosquare.Raspberry.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Unosquare.RaspberryIO, Version=0.25.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unosquare.Raspberry.IO.0.25.0\lib\netstandard2.0\Unosquare.RaspberryIO.dll</HintPath>
+    <Reference Include="Unosquare.RaspberryIO, Version=0.20.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unosquare.Raspberry.IO.0.20.0\lib\netstandard2.0\Unosquare.RaspberryIO.dll</HintPath>
     </Reference>
     <Reference Include="Unosquare.WiringPi, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Unosquare.WiringPi.0.4.0\lib\netstandard2.0\Unosquare.WiringPi.dll</HintPath>

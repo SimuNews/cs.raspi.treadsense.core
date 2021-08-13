@@ -39,7 +39,7 @@ namespace TreadRun.Core
             {
                 //read from file
                 DeviceJson deviceObj = JsonConvert.DeserializeObject<DeviceJson>(File.ReadAllText($"{DIRECTORY}/{FILENAME}"));
-#if DEBUG
+#if !DEBUG
                 device = new DeviceSettings(string.Format("TreadRun.{0}", "ZeroW"), Helper.StringToEnum<DeviceType>(deviceObj.DeviceType), deviceObj.Calibration.IsCalibrated);
 #else
                 device = new DeviceSettings(string.Format("TreadRun.{0}", Pi.Info.RaspberryPiVersion), Helper.StringToEnum<DeviceType>(deviceObj.DeviceType), deviceObj.Calibration.IsCalibrated);
@@ -90,7 +90,7 @@ namespace TreadRun.Core
             LogCenter.Initialize();
             CalibrationService.Instance.Initialize();
 
-#if !DEBUG
+#if DEBUG
             //Init RaspberryIO
             Pi.Init<BootstrapWiringPi>();
 #endif
