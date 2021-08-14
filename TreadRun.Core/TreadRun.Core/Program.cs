@@ -82,18 +82,16 @@ namespace TreadRun.Core
 
             device.SetInitialized(true);
 
-            User.Initialize(device);
+            User.Instance.SetDevice(device);
         }
 
         private static void InitializeProgram()
         {
-            LogCenter.Initialize();
-            CalibrationService.Instance.Initialize();
-
-#if DEBUG
             //Init RaspberryIO
             Pi.Init<BootstrapWiringPi>();
-#endif
+
+            LogCenter.Initialize();
+            CalibrationService.Instance.Initialize();
 
             try
             {

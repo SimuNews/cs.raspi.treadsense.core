@@ -12,6 +12,10 @@ namespace TreadRun.Core.Helpers
     {
         private static Dictionary<int, IGpioPin> gpios = new Dictionary<int, IGpioPin>();
 
+        /// <summary>
+        /// Set a GPIO as an output
+        /// </summary>
+        /// <param name="pin">GPIO ID</param>
         public static void SetAsOutput(int pin)
         {
             if(gpios.ContainsKey(pin))
@@ -20,26 +24,25 @@ namespace TreadRun.Core.Helpers
             }
             else
             {
-                var gpio = Pi.Gpio[pin];
+                IGpioPin gpio = Pi.Gpio[pin];
                 gpio.PinMode = GpioPinDriveMode.Output;
                 gpios.Add(pin, gpio);
             }
         }
 
+        /// <summary>
+        /// Set a GPIO as an output
+        /// </summary>
+        /// <param name="pin">GPIO ID</param>
         public static void SetAsOutput(BcmPin pin)
         {
-            if (gpios.ContainsKey((int)pin))
-            {
-                gpios[(int)pin].PinMode = GpioPinDriveMode.Output;
-            }
-            else
-            {
-                var gpio = Pi.Gpio[pin];
-                gpio.PinMode = GpioPinDriveMode.Output;
-                gpios.Add((int)pin, gpio);
-            }
+            SetAsOutput(pin);
         }
 
+        /// <summary>
+        /// Set a GPIO as an input
+        /// </summary>
+        /// <param name="pin">GPIO ID</param>
         public static void SetAsInput(int pin)
         {
             if (gpios.ContainsKey(pin))
@@ -48,48 +51,61 @@ namespace TreadRun.Core.Helpers
             }
             else
             {
-                var gpio = Pi.Gpio[pin];
+                IGpioPin gpio = Pi.Gpio[pin];
                 gpio.PinMode = GpioPinDriveMode.Input;
                 gpios.Add(pin, gpio);
             }
         }
 
+        /// <summary>
+        /// Set a GPIO as an input
+        /// </summary>
+        /// <param name="pin">GPIO ID</param>
         public static void SetAsInput(BcmPin pin)
         {
-            if (gpios.ContainsKey((int)pin))
-            {
-                gpios[(int)pin].PinMode = GpioPinDriveMode.Input;
-            }
-            else
-            {
-                var gpio = Pi.Gpio[pin];
-                gpio.PinMode = GpioPinDriveMode.Input;
-                gpios.Add((int)pin, gpio);
-            }
+            SetAsInput(pin);
         }
 
+        /// <summary>
+        /// Reads the state of a GPIO
+        /// </summary>
+        /// <param name="gpioPin">GPIO ID</param>
+        /// <returns>True, if high</returns>
         public static bool ReadDigital(int gpioPin)
         {
             SetAsInput(gpioPin);
             return gpios[gpioPin].Read();
         }
 
+        /// <summary>
+        /// Reads the state of a GPIO
+        /// </summary>
+        /// <param name="gpioPin">GPIO ID</param>
+        /// <returns>True, if high</returns>
         public static bool ReadDigital(BcmPin gpioPin)
         {
-            SetAsInput(gpioPin);
-            return gpios[(int)gpioPin].Read();
+            return ReadDigital(gpioPin);
         }
 
+        /// <summary>
+        /// Writes a digital signal 5V / 0V
+        /// </summary>
+        /// <param name="gpioPin">GPIO ID</param>
+        /// <param name="high">True = 5V | False = 0V</param>
         public static void WriteDigital(int gpioPin, bool high = true)
         {
             SetAsOutput(gpioPin);
             gpios[gpioPin].Write(high);
         }
 
+        /// <summary>
+        /// Writes a digital signal 5V / 0V
+        /// </summary>
+        /// <param name="gpioPin">GPIO ID</param>
+        /// <param name="high">True = 5V | False = 0V</param>
         public static void WriteDigital(BcmPin gpioPin, bool high = true)
         {
-            SetAsOutput(gpioPin);
-            gpios[(int)gpioPin].Write(high);
+            WriteDigital(gpioPin, high);
         }
     }
 }
