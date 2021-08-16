@@ -39,6 +39,7 @@ namespace TreadRun.Core.Services
 
         // Register calibration models
         public VelocityCalibration VelocityCalibration { get; set; }
+        public InclineCalibration InclineCalibration { get; set; }
 
         #endregion
 
@@ -54,12 +55,14 @@ namespace TreadRun.Core.Services
             #region initialize
 
             VelocityCalibration = new VelocityCalibration();
+			InclineCalibration = new InclineCalibration();
 
 			#endregion
 
 			#region check for saved files
 
 			VelocityCalibration.Load();
+			InclineCalibration.Load();
 
             #endregion
 

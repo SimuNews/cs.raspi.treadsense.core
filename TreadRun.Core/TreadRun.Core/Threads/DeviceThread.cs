@@ -27,6 +27,8 @@ namespace TreadRun.Core.Threads
             {
                 LogCenter.Instance.LogInfo("Device already calibrated!");
             }
+            
+            CalibrationService.Instance.InclineCalibration.Calibrate();
 
             while (true)
             {
