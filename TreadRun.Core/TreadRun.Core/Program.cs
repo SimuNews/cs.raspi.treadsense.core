@@ -82,18 +82,13 @@ namespace TreadRun.Core
 
             device.SetInitialized(true);
 
-            User.Initialize(device);
+            User.Instance.SetDevice(device);
         }
 
         private static void InitializeProgram()
         {
-            LogCenter.Initialize();
-            CalibrationService.Instance.Initialize();
-
-#if DEBUG
             //Init RaspberryIO
             Pi.Init<BootstrapWiringPi>();
-#endif
 
             try
             {
@@ -105,7 +100,7 @@ namespace TreadRun.Core
 
                 if (!File.Exists($"{DIRECTORY}/{FILENAME}"))
                 {
-                    File.WriteAllText($"{DIRECTORY}/{FILENAME}", "{\"deviceType\":\"Default\",\"calibration\":{\"isCalibrated\":false,\"averageDistance\":0,\"defaultIncline\":0}}");
+                    File.WriteAllText($"{DIRECTORY}/{FILENAME}", "{\"deviceType\":\"Default\"}");
                 }
             }
             catch (Exception ex)
@@ -115,7 +110,7 @@ namespace TreadRun.Core
 
         }
 
-#endregion
+        #endregion
     }
 
 #region json classes

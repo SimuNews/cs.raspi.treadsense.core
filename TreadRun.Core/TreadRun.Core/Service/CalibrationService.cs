@@ -25,7 +25,7 @@ namespace TreadRun.Core.Services
 					lock (SyncRoot)
 					{
 						if (_instance == null)
-							_instance = new CalibrationService();
+							_instance = new CalibrationService().Initialize();
 					}
 				}
 
@@ -43,16 +43,17 @@ namespace TreadRun.Core.Services
 
         #endregion
 
-        #region public methods
+        #region private methods
 
-        public void Initialize()
+        private CalibrationService Initialize()
 		{
 			CreateNewServiceInstances();
+			return this;
 		}
 
 		private void CreateNewServiceInstances()
 		{
-            #region initialize
+			#region initialize
 
             VelocityCalibration = new VelocityCalibration();
 			InclineCalibration = new InclineCalibration();
@@ -64,10 +65,10 @@ namespace TreadRun.Core.Services
 			VelocityCalibration.Load();
 			InclineCalibration.Load();
 
-            #endregion
+			#endregion
 
-        }
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }
