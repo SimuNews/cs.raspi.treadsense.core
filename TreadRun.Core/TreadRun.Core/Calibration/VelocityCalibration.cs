@@ -52,10 +52,10 @@ namespace TreadRun.Core.Calibration
             Stopwatch timeBetweenStripes = new Stopwatch();
 
             runTime.Start();
-#if DEBUG
+#if !DEBUG
             while (false)
 #else
-            while (!GPIOHelper.ReadDigital(PR_GPIO))
+            while (GPIOHelper.ReadDigital(PR_GPIO))
 #endif
             {
                 if (runTime.Elapsed.TotalSeconds >= TIMEOUT)
@@ -71,14 +71,17 @@ namespace TreadRun.Core.Calibration
             while (runTime.Elapsed.TotalSeconds <= CALIBRATIONTIME)
             {
                 //If another stripe got read
-#if DEBUG
+#if !DEBUG
                 if (timeBetweenStripes.ElapsedMilliseconds >= 150)
 #else
-                if (GPIOHelper.ReadDigital(PR_GPIO))
+                if (!GPIOHelper.ReadDigital(PR_GPIO))
 #endif
                 {
                     distances.Add((timeBetweenStripes.Elapsed.TotalSeconds.ToFixed(3) * (KPH / 3.6)).ToFixed(3));
                     timeBetweenStripes.Restart();
+
+                    LogCenter.Instance.LogInfo("Hittet stripe!");
+
                     hits++;
                 }
             }
@@ -100,6 +103,11 @@ namespace TreadRun.Core.Calibration
             s.RemoveRange(s.Count - 4, 3);
 
             Distance = s;
+            foreach (var item in Distance)
+            {
+                LogCenter.Instance.LogInfo(item);
+            }
+
             IsCalibrated = true;
 
             Save();
