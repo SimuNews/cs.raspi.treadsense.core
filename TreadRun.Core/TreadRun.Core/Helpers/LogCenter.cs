@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,18 +19,27 @@ namespace TreadRun.Core.Helpers
 
     public class LogCenter
     {
-        public static LogCenter Instance { get; private set; } = null;
+        #region threadsafe singleton
 
-        public LogCenter()
+        private static volatile LogCenter _instance;
+        private static readonly object SyncRoot = new object();
+
+        public static LogCenter Instance
         {
-            Instance = Instance ?? this;
-        }
+            [DebuggerStepThrough]
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (SyncRoot)
+                    {
+                        if (_instance == null)
+                            _instance = new LogCenter();
+                    }
+                }
 
-        #region static methods
-
-        public static void Initialize()
-        {
-            Instance = new LogCenter();
+                return _instance;
+            }
         }
 
         #endregion
@@ -83,6 +93,5 @@ namespace TreadRun.Core.Helpers
         }
 
         #endregion
-
     }
 }

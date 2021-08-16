@@ -22,6 +22,10 @@ namespace TreadRun.Core.Threads
             {
                 if(CalibrationService.Instance.VelocityCalibration.Calibrate())
                     LogCenter.Instance.LogInfo("Calibration successful!");
+            } 
+            else
+            {
+                LogCenter.Instance.LogInfo("Device already calibrated!");
             }
 
             while (true)
