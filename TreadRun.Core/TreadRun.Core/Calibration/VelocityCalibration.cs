@@ -45,6 +45,7 @@ namespace TreadRun.Core.Calibration
 
             //vars
             int hits = 0;
+            bool readOld, readNew = true;
             List<double> distances = new List<double>();
 
             //start timer
@@ -74,15 +75,20 @@ namespace TreadRun.Core.Calibration
 #if !DEBUG
                 if (timeBetweenStripes.ElapsedMilliseconds >= 150)
 #else
-                if (!GPIOHelper.ReadDigital(PR_GPIO))
+                readOld = readNew;
+                readNew = GPIOHelper.ReadDigital(PR_GPIO);
+                if (readOld != readNew && readNew)
 #endif
                 {
-                    distances.Add((timeBetweenStripes.Elapsed.TotalSeconds.ToFixed(3) * (KPH / 3.6)).ToFixed(3));
-                    timeBetweenStripes.Restart();
+                    if (timeBetweenStripes.ElapsedMilliseconds >= 10)
+                    {
+                        distances.Add((timeBetweenStripes.Elapsed.TotalSeconds.ToFixed(3) * (KPH / 3.6)).ToFixed(3));
+                        timeBetweenStripes.Restart();
 
-                    LogCenter.Instance.LogInfo("Hittet stripe!");
+                        LogCenter.Instance.LogInfo("Hittet stripe!");
 
-                    hits++;
+                        hits++;
+                    }
                 }
             }
 

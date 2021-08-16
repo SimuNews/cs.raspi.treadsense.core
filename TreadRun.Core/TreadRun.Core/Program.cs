@@ -90,9 +90,6 @@ namespace TreadRun.Core
             //Init RaspberryIO
             Pi.Init<BootstrapWiringPi>();
 
-            LogCenter.Initialize();
-            CalibrationService.Instance.Initialize();
-
             try
             {
                 //Create folders and files the first time...
@@ -103,7 +100,7 @@ namespace TreadRun.Core
 
                 if (!File.Exists($"{DIRECTORY}/{FILENAME}"))
                 {
-                    File.WriteAllText($"{DIRECTORY}/{FILENAME}", "{\"deviceType\":\"Default\",\"calibration\":{\"isCalibrated\":false,\"averageDistance\":0,\"defaultIncline\":0}}");
+                    File.WriteAllText($"{DIRECTORY}/{FILENAME}", "{\"deviceType\":\"Default\"}");
                 }
             }
             catch (Exception ex)
@@ -113,7 +110,7 @@ namespace TreadRun.Core
 
         }
 
-#endregion
+        #endregion
     }
 
 #region json classes

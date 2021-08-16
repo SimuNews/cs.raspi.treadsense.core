@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 using TreadRun.Core.Calibration;
 using TreadRun.Core.Helpers;
 using TreadRun.Core.Services;
-//using Unosquare.RaspberryIO;
-//using Unosquare.RaspberryIO.Abstractions;
-//using Unosquare.WiringPi;
 
 namespace TreadRun.Core.Threads
 {
