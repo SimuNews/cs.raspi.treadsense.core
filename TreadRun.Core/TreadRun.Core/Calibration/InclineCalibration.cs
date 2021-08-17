@@ -33,6 +33,8 @@ namespace TreadRun.Core.Calibration
 
                 LogCenter.Instance.LogInfo($"Incline calibrated successfully: {XIncline}, {YIncline}");
 
+                Save();
+
                 return true;
             }
             catch (Exception)
