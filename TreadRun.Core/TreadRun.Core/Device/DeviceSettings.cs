@@ -32,6 +32,8 @@ namespace TreadRun.Core.Device
 
         #endregion
 
+        #region ctor
+
         public DeviceSettings(string deviceName, DeviceType deviceType, bool isCalibrated)
         {
             DeviceName = deviceName;
@@ -40,6 +42,8 @@ namespace TreadRun.Core.Device
 
             Calibrations = new List<ICalibration>();
         }
+
+        #endregion
 
         #region public methods
 

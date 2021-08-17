@@ -1,25 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TreadRun.Core.Services;
 
 namespace TreadRun.Core.Device
 {
     class User
     {
-        public static User Instance { get; private set; }
+		#region threadsafe singleton
 
-        public DeviceSettings DeviceSettings { get; }
+		private static volatile User _instance;
+		private static readonly object SyncRoot = new object();
 
-        public User(DeviceSettings device)
-        {
-            DeviceSettings = device;
-        }
+		public static User Instance
+		{
+			[DebuggerStepThrough]
+			get
+			{
+				if (_instance == null)
+				{
+					lock (SyncRoot)
+					{
+						if (_instance == null)
+							_instance = new User();
+					}
+				}
 
-        public static void Initialize(DeviceSettings device)
-        {
-            Instance = Instance ?? new User(device);
-        }
+				return _instance;
+			}
+		}
+
+		#endregion
+
+		public DeviceSettings DeviceSettings { get; private set; }
+
+        public User() { }
+
+		public void SetDevice(DeviceSettings device) => DeviceSettings = device;
     }
 }
