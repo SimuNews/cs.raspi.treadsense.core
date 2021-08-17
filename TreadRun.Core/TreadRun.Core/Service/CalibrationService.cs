@@ -56,7 +56,7 @@ namespace TreadRun.Core.Services
 			#region initialize
 
             VelocityCalibration = new VelocityCalibration();
-			InclineCalibration = new InclineCalibration();
+            InclineCalibration = new InclineCalibration();
 
 			#endregion
 

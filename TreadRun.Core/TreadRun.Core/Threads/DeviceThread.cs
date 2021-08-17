@@ -15,6 +15,7 @@ namespace TreadRun.Core.Threads
         {
             LogCenter.Instance.LogInfo("Started thread...");
 
+            // CAlibration is later a user problem
             if(!CalibrationService.Instance.VelocityCalibration.IsCalibrated)
             {
                 if(CalibrationService.Instance.VelocityCalibration.Calibrate())
@@ -24,12 +25,24 @@ namespace TreadRun.Core.Threads
             {
                 LogCenter.Instance.LogInfo("Device already calibrated!");
             }
-            
-            CalibrationService.Instance.InclineCalibration.Calibrate();
+
+            if (!CalibrationService.Instance.InclineCalibration.IsCalibrated)
+            {
+                if (CalibrationService.Instance.InclineCalibration.Calibrate())
+                    LogCenter.Instance.LogInfo("Calibration successful!");
+            }
+            else
+            {
+                LogCenter.Instance.LogInfo("Device already calibrated!");
+            }
+
+
+
+            LogCenter.Instance.LogInfo("Start loop...");
 
             while (true)
             {
-                await Task.Delay(1000);
+                await Task.Delay(10);
             }
         }
     }
