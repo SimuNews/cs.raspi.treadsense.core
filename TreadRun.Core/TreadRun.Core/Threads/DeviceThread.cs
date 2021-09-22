@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TreadRun.Core.Calibration;
-using TreadRun.Core.Helpers;
-using TreadRun.Core.Services;
+using TreadSense.Calibration;
+using TreadSense.Helpers;
+using TreadSense.Services;
 
-namespace TreadRun.Core.Threads
+namespace TreadSense.Threads
 {
     class DeviceThread
     {

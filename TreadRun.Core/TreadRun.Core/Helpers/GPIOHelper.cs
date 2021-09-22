@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Unosquare.RaspberryIO;
 using Unosquare.RaspberryIO.Abstractions;
 
-namespace TreadRun.Core.Helpers
+namespace TreadSense.Helpers
 {
     class GPIOHelper
     {

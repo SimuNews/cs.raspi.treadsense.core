@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TreadRun.Core.Calibration;
+using TreadSense.Calibration;
 
-namespace TreadRun.Core.Device
+namespace TreadSense.Device
 {
     public enum DeviceType
     {

@@ -1,16 +1,16 @@
 ﻿using System;
-using TreadRun.Core.Device;
-using TreadRun.Core.Helpers;
+using TreadSense.Device;
+using TreadSense.Helpers;
 using System.IO;
-using TreadRun.Core.Calibration;
+using TreadSense.Calibration;
 using System.Threading.Tasks;
-using TreadRun.Core.Threads;
+using TreadSense.Threads;
 using Newtonsoft.Json;
-using TreadRun.Core.Services;
+using TreadSense.Services;
 using Unosquare.RaspberryIO;
 using Unosquare.WiringPi;
 
-namespace TreadRun.Core
+namespace TreadSense
 {
     class Program
     {

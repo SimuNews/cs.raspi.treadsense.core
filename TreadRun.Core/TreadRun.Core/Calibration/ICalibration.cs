@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TreadRun.Core.Calibration
+namespace TreadSense.Calibration
 {
     interface ICalibration
     {

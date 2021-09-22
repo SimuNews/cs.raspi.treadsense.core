@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TreadRun.Core")]
+[assembly: AssemblyTitle("TreadSense")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SimuNews")]
-[assembly: AssemblyProduct("TreadRun.Core")]
+[assembly: AssemblyCompany("TearDrop Development")]
+[assembly: AssemblyProduct("TreadSense")]
 [assembly: AssemblyCopyright("Copyright © SimuNews 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

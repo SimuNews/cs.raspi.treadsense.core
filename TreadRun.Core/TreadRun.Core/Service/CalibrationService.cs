@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TreadRun.Core.Calibration;
+using TreadSense.Calibration;
 
-namespace TreadRun.Core.Services
+namespace TreadSense.Services
 {
     class CalibrationService
     {

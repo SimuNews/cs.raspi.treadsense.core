@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TreadRun.Core.Services;
+using TreadSense.Services;
 
-namespace TreadRun.Core.Device
+namespace TreadSense.Device
 {
     class User
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TreadRun.Core.Protocol
+namespace TreadSense.Protocol
 {
     interface IConnectionProtocol
     {

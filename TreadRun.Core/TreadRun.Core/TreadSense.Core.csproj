@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B8920844-C63B-4A4F-B837-A72FEFC81F0A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TreadRun.Core</RootNamespace>
-    <AssemblyName>TreadRun.Core</AssemblyName>
+    <RootNamespace>TreadSense</RootNamespace>
+    <AssemblyName>TreadSense.Core</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
